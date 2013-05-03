@@ -1,0 +1,89 @@
+GIT
+  remote: git@github.com:crowdtap/promiscuous.git
+  revision: 6208447261ea4b728f59d844f579bbb1894bff04
+  specs:
+    promiscuous (0.90.0)
+      activemodel (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      algorithms (~> 0.6.1)
+      bunny (>= 0.9.0.pre8)
+      fnv (= 0.2.0)
+      multi_json (~> 1.7.2)
+      redis (~> 3.0.2)
+      ruby-progressbar (~> 1.0.2)
+
+PATH
+  remote: .
+  specs:
+    async_callbacks (0.0.1)
+      activemodel (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      sidekiq (>= 2.11.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activemodel (3.2.13)
+      activesupport (= 3.2.13)
+      builder (~> 3.0.0)
+    activesupport (3.2.13)
+      i18n (= 0.6.1)
+      multi_json (~> 1.0)
+    algorithms (0.6.1)
+    amq-protocol (1.4.0)
+    builder (3.0.4)
+    bunny (0.9.0.pre10)
+      amq-protocol (>= 1.4.0)
+    celluloid (0.13.0)
+      timers (>= 1.0.0)
+    coderay (1.0.9)
+    connection_pool (1.0.0)
+    diff-lcs (1.2.4)
+    fnv (0.2.0)
+    i18n (0.6.1)
+    method_source (0.8.1)
+    mongoid (3.0.23)
+      activemodel (~> 3.1)
+      moped (~> 1.2)
+      origin (~> 1.0)
+      tzinfo (~> 0.3.22)
+    moped (1.4.5)
+    multi_json (1.7.2)
+    origin (1.1.0)
+    pry (0.9.12.1)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
+    rake (10.0.4)
+    redis (3.0.4)
+    redis-namespace (1.2.1)
+      redis (~> 3.0.0)
+    rspec (2.13.0)
+      rspec-core (~> 2.13.0)
+      rspec-expectations (~> 2.13.0)
+      rspec-mocks (~> 2.13.0)
+    rspec-core (2.13.1)
+    rspec-expectations (2.13.0)
+      diff-lcs (>= 1.1.3, < 2.0)
+    rspec-mocks (2.13.1)
+    ruby-progressbar (1.0.2)
+    sidekiq (2.11.2)
+      celluloid (>= 0.13.0)
+      connection_pool (>= 1.0.0)
+      multi_json
+      redis (>= 3.0)
+      redis-namespace
+    slop (3.4.4)
+    timers (1.1.0)
+    tzinfo (0.3.37)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  async_callbacks!
+  mongoid
+  promiscuous!
+  pry
+  rake
+  rspec
