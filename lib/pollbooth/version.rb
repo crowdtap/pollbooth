@@ -1,3 +1,3 @@
-module PollBooth
+class PollBooth
   VERSION = '0.0.1'
 end

@@ -2,17 +2,19 @@
 $:.unshift File.expand_path("../lib", __FILE__)
 $:.unshift File.expand_path("../../lib", __FILE__)
 
-require 'async_callbacks/version'
+require 'pollbooth/version'
 
 Gem::Specification.new do |s|
-  s.name        = "async_callbacks"
-  s.version     = AsyncCallbacks::VERSION
+  s.name        = "pollbooth"
+  s.version     = PollBooth::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Kareem Kouddous"]
   s.email       = ["kareeknyc@gmail.com"]
-  s.homepage    = "http://github.com/crowdtap/async_callbacks"
-  s.summary     = "Asynchronous callbacks for Mongoid and Promiscuous"
-  s.description = "Asynchronous callbacks for Mongoid and Promiscuous"
+  s.homepage    = "http://github.com/crowdtap/pollbooth"
+  s.summary     = "Data cache refreshed regularly"
+  s.description = "Data cache refreshed regularly"
+
+  s.add_dependency "bigben",       ">= 0.0.1"
 
   s.files        = Dir["lib/**/*"]
   s.require_path = 'lib'
