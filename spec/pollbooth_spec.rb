@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe PollBooth do
   subject do
-    define_constant :TestPoller, PollBooth do
+    define_constant :TestPoller do
+      include PollBooth
+
       data do
         @counter ||= 0
         data = { :counter => @counter }
@@ -63,7 +65,9 @@ describe PollBooth do
 
       context "a another poller exists and has been started" do
         let(:another_poller) do
-          define_constant :AnotherTestPoller, PollBooth do
+          define_constant :AnotherTestPoller do
+            include PollBooth
+
             data do
               @counter ||= 0
               data = { :counter => @counter }

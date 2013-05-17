@@ -1,35 +1,44 @@
 require 'active_support/core_ext'
 require 'bigben'
 
-class PollBooth
-  class_attribute :poller
-  class_attribute :options
-  @@data = nil
+module PollBooth
+  extend ActiveSupport::Concern
 
-  def self.configure(options={})
-    self.options = options
+  included do
+    class << self
+      attr_accessor :poller
+      attr_accessor :options
+      attr_accessor :data_block
+    end
   end
 
-  def self.start
-    raise "you must run configure before starting" if self.options.nil?
-    raise "you must provide a load_data block before starting" if @@data.nil?
+  module ClassMethods
+    def configure(options={})
+      self.options ||= {}
+      self.options = self.options.merge(options)
+    end
 
-    self.stop
-    self.poller = new(self.options)
-  end
+    def start
+      raise "you must run configure before starting" if self.options.nil?
+      raise "you must provide a load_data block before starting" if self.data_block.nil?
 
-  def self.stop
-    self.poller.stop if self.poller
-  end
+      self.stop
+      self.poller = new(self.options)
+    end
 
-  def self.lookup(value)
-    raise "Poller not started" unless self.poller.try(:started?)
+    def stop
+      self.poller.stop if self.poller
+    end
 
-    self.poller.lookup(value)
-  end
+    def lookup(value)
+      raise "Poller not started" unless self.poller.try(:started?)
 
-  def self.data(&block)
-    @@data = block
+      self.poller.lookup(value)
+    end
+
+    def data(&block)
+      self.data_block = block
+    end
   end
 
   def initialize(options)
@@ -55,7 +64,7 @@ class PollBooth
 
   def lookup(value)
     load_data unless cached?
-    @lock.synchronize { @data[value] }
+    @lock.synchronize { @cached_data[value] }
   end
 
   def stop
@@ -70,7 +79,7 @@ class PollBooth
   private
 
   def load_data
-    data = @@data.call
-    @lock.synchronize { @data = data }
+    data = self.class.data_block.call
+    @lock.synchronize { @cached_data = data }
   end
 end
