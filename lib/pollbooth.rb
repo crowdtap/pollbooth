@@ -53,7 +53,7 @@ class PollBooth
   end
 
   def stop
-    @timer.reset
+    @timer.reset if cached?
     @started = false
   end
 

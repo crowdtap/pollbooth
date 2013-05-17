@@ -17,14 +17,25 @@ describe PollBooth do
   context "when caching it turned off" do
     let(:options) { { :cache => :off } }
 
-    it "reloads data every lookup" do
-      subject.start
+    before { subject.start }
 
+    it "reloads data every lookup" do
       20.times { subject.lookup(:counter) }
 
       subject.lookup(:counter).should == 21
     end
+
+    it "stops the current poller creates a new one when the poller is started again" do
+      poller = subject.poller
+
+      subject.start
+
+      poller.started?.should == false
+      subject.poller.should_not == poller
+      subject.poller.started?.should == true
+    end
   end
+
   context "when caching it turned on" do
     let(:options) { { :ttl => 1, :cache => :on } }
 
@@ -40,16 +51,14 @@ describe PollBooth do
         subject.lookup(:counter).should >= 1
       end
 
-      context "when the poller is started again" do
-        it "stops the current poller creates a new one" do
-          poller = subject.poller
+      it "stops the current poller creates a new one when the poller is started again" do
+        poller = subject.poller
 
-          subject.start
+        subject.start
 
-          poller.started?.should == false
-          subject.poller.should_not == poller
-          subject.poller.started?.should == true
-        end
+        poller.started?.should == false
+        subject.poller.should_not == poller
+        subject.poller.started?.should == true
       end
 
       context "a another poller exists and has been started" do
