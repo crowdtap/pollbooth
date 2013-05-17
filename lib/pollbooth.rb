@@ -4,6 +4,7 @@ require 'bigben'
 class PollBooth
   class_attribute :poller
   class_attribute :options
+  @@data = nil
 
   def self.configure(options={})
     self.options = options
@@ -11,6 +12,7 @@ class PollBooth
 
   def self.start
     raise "you must run configure before starting" if self.options.nil?
+    raise "you must provide a load_data block before starting" if @@data.nil?
 
     self.stop
     self.poller = new(self.options)
@@ -24,6 +26,10 @@ class PollBooth
     raise "Poller not started" unless self.poller.try(:started?)
 
     self.poller.lookup(value)
+  end
+
+  def self.data(&block)
+    @@data = block
   end
 
   def initialize(options)
@@ -64,7 +70,7 @@ class PollBooth
   private
 
   def load_data
-    data = self.load
+    data = @@data.call
     @lock.synchronize { @data = data }
   end
 end
