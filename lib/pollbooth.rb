@@ -4,8 +4,9 @@ require 'bigben'
 class PollBooth
   class_attribute :poller
 
-  def self.start(interval=60)
-    self.poller = new(interval)
+  def self.start(options={})
+    self.stop
+    self.poller = new(options)
   end
 
   def self.stop
@@ -18,13 +19,16 @@ class PollBooth
     self.poller.lookup(value)
   end
 
-  def initialize(interval)
-    @interval = interval
-    @lock = Mutex.new
+  def initialize(options)
+    @ttl   = options[:ttl]   || 60
+    @cache = options[:cache] ||= :on
 
+    @lock = Mutex.new
     load_data # synchronous, blocking request so lookup always find something
-    @timer = BigBen.new("PollBooth", @interval) { load_data }
-    @timer.start
+    if cached?
+      @timer = BigBen.new("PollBooth", @interval) { load_data }
+      @timer.start
+    end
     @started = true
   end
 
@@ -37,11 +41,17 @@ class PollBooth
   end
 
   def lookup(value)
+    load_data unless cached?
     @lock.synchronize { @data[value] }
   end
 
   def stop
     @timer.reset
+    @started = false
+  end
+
+  def cached?
+    @cache == :on
   end
 
   private
