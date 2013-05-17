@@ -3,10 +3,17 @@ require 'bigben'
 
 class PollBooth
   class_attribute :poller
+  class_attribute :options
 
-  def self.start(options={})
+  def self.configure(options={})
+    self.options = options
+  end
+
+  def self.start
+    raise "you must run configure before starting" if self.options.nil?
+
     self.stop
-    self.poller = new(options)
+    self.poller = new(self.options)
   end
 
   def self.stop

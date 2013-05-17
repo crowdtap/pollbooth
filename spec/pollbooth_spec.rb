@@ -12,11 +12,13 @@ describe PollBooth do
     end
   end
 
+  before { subject.configure(options) }
+
   context "when caching it turned off" do
     let(:options) { { :cache => :off } }
 
     it "reloads data every lookup" do
-      subject.start(options)
+      subject.start
 
       20.times { subject.lookup(:counter) }
 
@@ -27,7 +29,7 @@ describe PollBooth do
     let(:options) { { :ttl => 1, :cache => :on } }
 
     context "when a poller has been started" do
-      before { subject.start(options) }
+      before { subject.start }
       after  { subject.stop }
 
       it "updates the cache asynchronously" do
@@ -61,7 +63,8 @@ describe PollBooth do
             end
           end
         end
-        before { another_poller.start(options) }
+        before { another_poller.configure(options) }
+        before { another_poller.start }
         after  { another_poller.stop }
 
         it "can run two pollers at the same timeat the same time" do
