@@ -50,7 +50,7 @@ describe PollBooth do
 
         sleep 2
 
-        subject.lookup(:counter).should >= 1
+        subject.lookup(:counter).should <= 2
       end
 
       it "stops the current poller creates a new one when the poller is started again" do

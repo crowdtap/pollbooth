@@ -48,7 +48,7 @@ module PollBooth
     @lock = Mutex.new
     load_data # synchronous, blocking request so lookup always find something
     if cached?
-      @timer = BigBen.new("PollBooth", @interval) { load_data }
+      @timer = BigBen.new("PollBooth", @ttl) { load_data }
       @timer.start
     end
     @started = true
