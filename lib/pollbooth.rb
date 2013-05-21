@@ -71,7 +71,7 @@ module PollBooth
   private
 
   def load_data
-    data = self.class.cache_block.call
+    data = self.instance_eval(&self.class.cache_block)
     @lock.synchronize { @cached_data = data }
   end
 end
