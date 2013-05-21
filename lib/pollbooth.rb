@@ -7,23 +7,17 @@ module PollBooth
   included do
     class << self
       attr_accessor :poller
-      attr_accessor :options
-      attr_accessor :data_block
+      attr_accessor :ttl
+      attr_accessor :cache_block
     end
   end
 
   module ClassMethods
-    def configure(options={})
-      self.options ||= {}
-      self.options = self.options.merge(options)
-    end
-
-    def start
-      raise "you must run configure before starting" if self.options.nil?
-      raise "you must provide a load_data block before starting" if self.data_block.nil?
+    def start(cache_on=true)
+      raise "you must provide cache block before starting" if self.cache_block.nil?
 
       self.stop
-      self.poller = new(self.options)
+      self.poller = new(cache_on)
     end
 
     def stop
@@ -36,18 +30,20 @@ module PollBooth
       self.poller.lookup(value)
     end
 
-    def data(&block)
-      self.data_block = block
+    def cache(ttl, &block)
+      self.cache_block = block
+      self.ttl = ttl
     end
   end
 
-  def initialize(options)
-    @ttl   = options[:ttl]   || 60
-    @cache = options[:cache] ||= :on
+  def initialize(cache_on)
+    @cache_on = cache_on
+    @ttl      = self.class.ttl.seconds
+    @lock     = Mutex.new
 
-    @lock = Mutex.new
     load_data # synchronous, blocking request so lookup always find something
-    if cached?
+
+    if @cache_on
       @timer = BigBen.new("PollBooth", @ttl) { load_data }
       @timer.start
     end
@@ -63,23 +59,19 @@ module PollBooth
   end
 
   def lookup(value)
-    load_data unless cached?
+    load_data unless @cache_on
     @lock.synchronize { @cached_data[value] }
   end
 
   def stop
-    @timer.reset if cached?
+    @timer.reset if @cache_on
     @started = false
-  end
-
-  def cached?
-    @cache == :on
   end
 
   private
 
   def load_data
-    data = self.class.data_block.call
+    data = self.class.cache_block.call
     @lock.synchronize { @cached_data = data }
   end
 end
