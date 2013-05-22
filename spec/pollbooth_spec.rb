@@ -6,6 +6,10 @@ describe PollBooth do
       include PollBooth
 
       cache 1.second do
+        inc_counter
+      end
+
+      def inc_counter
         @counter ||= 0
         data = { :counter => @counter }
         @counter += 1

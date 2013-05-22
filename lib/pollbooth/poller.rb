@@ -1,6 +1,7 @@
 class PollBooth::Poller
   def initialize(klass, cache_on)
     @klass    = klass
+    @instance = klass.new
     @cache_on = cache_on
     @ttl      = @klass.ttl.seconds
     @lock     = Mutex.new
@@ -35,7 +36,7 @@ class PollBooth::Poller
   private
 
   def load_data
-    data = instance_eval(&@klass.cache_block)
+    data = @instance.instance_eval(&@klass.cache_block)
     @lock.synchronize { @cached_data = data }
   end
 end
