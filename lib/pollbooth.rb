@@ -1,9 +1,9 @@
 require 'active_support/core_ext'
 require 'bigben'
-require 'pollbooth/poller'
 
 module PollBooth
   extend ActiveSupport::Concern
+  require 'pollbooth/poller'
 
   included do
     class << self
