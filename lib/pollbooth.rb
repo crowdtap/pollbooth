@@ -35,5 +35,9 @@ module PollBooth
       self.cache_block = block
       self.ttl = ttl
     end
+
+    def started?
+      self.poller.try(:started?) || false
+    end
   end
 end

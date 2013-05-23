@@ -24,6 +24,10 @@ describe PollBooth do
         subject.lookup(:counter)
       }.to raise_error(RuntimeError)
     end
+
+    it "reports that it is not started" do
+      subject.started?.should == false
+    end
   end
 
   context 'when the poller has been started' do
@@ -32,6 +36,10 @@ describe PollBooth do
 
     context "when caching it turned off" do
       let(:cache_on) { false }
+
+      it "reports that it has been started" do
+        subject.started?.should == true
+      end
 
       it "reloads data every lookup" do
         20.times { subject.lookup(:counter) }
@@ -52,6 +60,10 @@ describe PollBooth do
 
     context "when caching it turned on" do
       let(:cache_on) { true }
+
+      it "reports that it has been started" do
+        subject.started?.should == true
+      end
 
       context "when a poller has been started" do
         it "updates the cache asynchronously" do
