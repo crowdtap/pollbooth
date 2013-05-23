@@ -25,7 +25,7 @@ class PollBooth::Poller
 
   def lookup(value)
     load_data unless @cache_on
-    @lock.synchronize { @cached_data[value] }
+    @lock.synchronize { @cached_data.with_indifferent_access[value] }
   end
 
   def stop

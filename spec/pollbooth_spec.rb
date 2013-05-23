@@ -56,6 +56,10 @@ describe PollBooth do
         subject.poller.should_not == poller
         subject.poller.started?.should == true
       end
+
+      it "it is indifferent to the lookup key being a string or symbol" do
+        subject.lookup('counter').should == 1
+      end
     end
 
     context "when caching it turned on" do
