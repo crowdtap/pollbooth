@@ -3,6 +3,44 @@ Pollbooth [![Build Status](https://travis-ci.org/crowdtap/pollbooth.png?branch=m
 
 Pollbooth is an easy way to cache data that is automatically refreshed at a regular interval.
 
+Install
+-------
+
+```ruby
+gem install pollbooth
+```
+or add the following line to your Gemfile:
+```ruby
+gem 'pollbooth'
+```
+and run `bundle install`
+
+Usage
+-----
+
+```ruby
+  class MemberCache
+    include PollBooth
+
+    cache 10.seconds do
+      Hash[Member.all.map { |member| [member.id, member.age] }
+    end
+  end
+```
+
+This will cache the age attribue using the member id as the key. So
+`MemberCache.lookup('jon@example.com')` will return the age of the member with
+email address `jon@example.com`.
+
+You need to make sure to start the poller by calling start on the class:
+
+```ruby
+  MemberCache.start
+```
+
+You should do this in the `after_fork` block if you are using unicorn. Otherwise
+you can put this in an initializer.
+
 License
 -------
 Copyright (C) 2013 Crowdtap
