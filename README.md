@@ -23,7 +23,7 @@ Usage
     include PollBooth
 
     cache 10.seconds do
-      Hash[Member.all.map { |member| [member.id, member.age] }
+      Hash[Member.all.map { |member| [member.id, member.age] }]
     end
   end
 ```
