@@ -1,0 +1,17 @@
+# Logfile created on 2014-07-15 16:43:24 -0400 by logger.rb/v1.2.7
+I, [2014-07-15T16:43:24.345905 #64406]  INFO -- : 7:  method_source (0.8.1) from /opt/boxen/rbenv/versions/2.1.0-github1/lib/ruby/gems/2.1.0/specifications/method_source-0.8.1.gemspec
+I, [2014-07-15T16:43:24.485817 #64403]  INFO -- : 4:  i18n (0.6.1) from /opt/boxen/rbenv/versions/2.1.0-github1/lib/ruby/gems/2.1.0/specifications/i18n-0.6.1.gemspec
+I, [2014-07-15T16:43:24.486643 #64403]  INFO -- : 4:  bundler (1.5.1) from /opt/boxen/rbenv/versions/2.1.0-github1/lib/ruby/gems/2.1.0/specifications/bundler-1.5.1.gemspec
+I, [2014-07-15T16:43:24.754785 #64399]  INFO -- : 0:  slop (3.4.4) from /opt/boxen/rbenv/versions/2.1.0-github1/lib/ruby/gems/2.1.0/specifications/slop-3.4.4.gemspec
+I, [2014-07-15T16:43:24.787107 #64405]  INFO -- : 6:  multi_json (1.7.3) from /opt/boxen/rbenv/versions/2.1.0-github1/lib/ruby/gems/2.1.0/specifications/multi_json-1.7.3.gemspec
+I, [2014-07-15T16:43:24.819352 #64402]  INFO -- : 3:  diff-lcs (1.2.4) from /opt/boxen/rbenv/versions/2.1.0-github1/lib/ruby/gems/2.1.0/specifications/diff-lcs-1.2.4.gemspec
+I, [2014-07-15T16:43:24.971589 #64400]  INFO -- : 1:  coderay (1.0.9) from /opt/boxen/rbenv/versions/2.1.0-github1/lib/ruby/gems/2.1.0/specifications/coderay-1.0.9.gemspec
+I, [2014-07-15T16:43:25.050312 #64401]  INFO -- : 2:  rake (10.0.4) from /opt/boxen/rbenv/versions/2.1.0-github1/lib/ruby/gems/2.1.0/specifications/rake-10.0.4.gemspec
+I, [2014-07-15T16:43:25.187705 #64404]  INFO -- : 5:  rspec-core (2.13.1) from /opt/boxen/rbenv/versions/2.1.0-github1/lib/ruby/gems/2.1.0/specifications/rspec-core-2.13.1.gemspec
+I, [2014-07-15T16:43:25.622070 #64406]  INFO -- : 7:  rspec-mocks (2.13.1) from /opt/boxen/rbenv/versions/2.1.0-github1/lib/ruby/gems/2.1.0/specifications/rspec-mocks-2.13.1.gemspec
+I, [2014-07-15T16:43:26.240098 #64399]  INFO -- : 0:  rspec-expectations (2.13.0) from /opt/boxen/rbenv/versions/2.1.0-github1/lib/ruby/gems/2.1.0/specifications/rspec-expectations-2.13.0.gemspec
+I, [2014-07-15T16:43:26.586625 #64405]  INFO -- : 6:  pry (0.9.12.1) from /opt/boxen/rbenv/versions/2.1.0-github1/lib/ruby/gems/2.1.0/specifications/pry-0.9.12.1.gemspec
+I, [2014-07-15T16:43:26.658180 #64403]  INFO -- : 4:  activesupport (3.2.13) from /opt/boxen/rbenv/versions/2.1.0-github1/lib/ruby/gems/2.1.0/specifications/activesupport-3.2.13.gemspec
+I, [2014-07-15T16:43:26.658796 #64400]  INFO -- : 1:  bigben (0.0.1) from /opt/boxen/rbenv/versions/2.1.0-github1/lib/ruby/gems/2.1.0/specifications/bigben-0.0.1.gemspec
+I, [2014-07-15T16:43:26.666652 #64401]  INFO -- : 2:  pollbooth (0.0.1) from /Users/arjun/src/pollbooth/pollbooth.gemspec
+I, [2014-07-15T16:43:27.098876 #64402]  INFO -- : 3:  rspec (2.13.0) from /opt/boxen/rbenv/versions/2.1.0-github1/lib/ruby/gems/2.1.0/specifications/rspec-2.13.0.gemspec

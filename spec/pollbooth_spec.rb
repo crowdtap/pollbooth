@@ -22,7 +22,7 @@ describe PollBooth do
     it "raises an exception" do
       expect {
         subject.lookup(:counter)
-      }.to raise_error(RuntimeError)
+      }.to raise_error(PollBooth::PollerNotFoundError)
     end
 
     it "reports that it is not started" do

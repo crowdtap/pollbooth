@@ -2,6 +2,8 @@ require 'active_support/core_ext'
 require 'bigben'
 
 module PollBooth
+  class PollerNotFoundError < ::StandardError; end;
+
   extend ActiveSupport::Concern
   require 'pollbooth/poller'
 
@@ -26,7 +28,7 @@ module PollBooth
     end
 
     def lookup(value)
-      raise "Poller not started" unless self.poller.try(:started?)
+      raise PollBooth::PollerNotFoundError.new("Poller not started") unless self.poller.try(:started?)
 
       self.poller.lookup(value)
     end
