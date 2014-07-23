@@ -32,14 +32,15 @@ This will cache the age attribue using the member id as the key. So
 `MemberCache.lookup('jon@example.com')` will return the age of the member with
 email address `jon@example.com`.
 
-You need to make sure to start the poller by calling start on the class:
+The poller will start lazily on the first lookup but you can also start it
+manually. This is recommended if populating the cache is expensive and will
+compromise the first request. You should do this in the `after_fork` block if 
+you are using unicorn. Otherwise you can do it in an initializer.
 
 ```ruby
   MemberCache.start
 ```
 
-You should do this in the `after_fork` block if you are using unicorn. Otherwise
-you can put this in an initializer.
 
 License
 -------
