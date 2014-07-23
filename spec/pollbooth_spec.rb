@@ -18,11 +18,11 @@ describe PollBooth do
     end
   end
 
+  after  { subject.stop }
+
   context 'when a poller has not been started' do
-    it "raises an exception" do
-      expect {
-        subject.lookup(:counter)
-      }.to raise_error(RuntimeError)
+    it "lazily starts the poller" do
+      subject.lookup(:counter).should == 0
     end
 
     it "reports that it is not started" do
@@ -32,7 +32,6 @@ describe PollBooth do
 
   context 'when the poller has been started' do
     before { subject.start(cache_on) }
-    after  { subject.stop }
 
     context "when caching it turned off" do
       let(:cache_on) { false }

@@ -3,13 +3,19 @@ require 'bigben'
 
 module PollBooth
   extend ActiveSupport::Concern
+
   require 'pollbooth/poller'
+  require 'pollbooth/railtie' if defined?(Rails)
+
+  mattr_accessor :pollers
 
   included do
     class << self
       attr_accessor :poller
       attr_accessor :ttl
       attr_accessor :cache_block
+
+      @@pollbooth_mutex = Mutex.new
     end
   end
 
@@ -17,8 +23,13 @@ module PollBooth
     def start(cache_on=true)
       raise "you must provide cache block before starting" if self.cache_block.nil?
 
-      self.stop
-      self.poller = Poller.new(self, cache_on)
+      self.class_variable_get(:@@pollbooth_mutex).synchronize do
+        self.stop
+        self.poller = Poller.new(self, cache_on)
+      end
+
+      PollBooth.pollers ||= []
+      PollBooth.pollers << self.poller
     end
 
     def stop
@@ -26,9 +37,9 @@ module PollBooth
     end
 
     def lookup(value)
-      raise "Poller not started" unless self.poller.try(:started?)
+     self.start unless self.poller.try(:started?)
 
-      self.poller.lookup(value)
+     self.poller.lookup(value)
     end
 
     def cache(ttl, &block)
