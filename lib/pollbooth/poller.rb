@@ -25,7 +25,7 @@ class PollBooth::Poller
 
   def lookup(value)
     load_data unless @cache_on
-    @lock.synchronize { @cached_data.with_indifferent_access[value] }
+    @lock.synchronize { @cached_data[value] }
   end
 
   def stop
@@ -37,6 +37,6 @@ class PollBooth::Poller
 
   def load_data
     data = @instance.instance_eval(&@klass.cache_block)
-    @lock.synchronize { @cached_data = data }
+    @lock.synchronize { @cached_data = data.with_indifferent_access }
   end
 end
